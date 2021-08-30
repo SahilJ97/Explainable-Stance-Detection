@@ -401,7 +401,7 @@ if __name__ == "__main__":
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
-    dev_set = VastReader("../data/VAST/vast_dev.csv")
+    dev_set = VastReader("../data/VAST/vast_dev.csv", no_stopwords=(model_type == 'bert-joint'))
     cls_sep_indices = [0, dev_set.doc_len + 1, -1]
 
     # create token_type_ids and token_type_ids_steps (latter is used for Integrated Gradients)
@@ -452,6 +452,7 @@ if __name__ == "__main__":
             word_importance_csv="../data/VAST_word_importance/processed_annotated_test.csv",
             smoothing=None,
             relevance_type=relevance_type,
-            return_seen=True
+            return_seen=True,
+            no_stopwords=(model_type == 'bert-joint')
         )
         evaluate()

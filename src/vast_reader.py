@@ -252,9 +252,10 @@ class VastReader(Dataset):
 
 if __name__ == "__main__":
     dataset = VastReader(
-        "../data/VAST/vast_train_0.9.csv",
+        "../data/VAST/vast_train_reduced_10.csv",
         exclude_from_main="../data/VAST_word_importance/special_datapoints_train.txt",
         word_importance_csv="../data/VAST_word_importance/processed_annotated_train.csv",
-        relevance_type="tf-idf"
+        relevance_type="tf-idf",
+        no_stopwords=True
     )
     print(len(dataset))
