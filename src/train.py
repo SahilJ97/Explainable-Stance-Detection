@@ -149,7 +149,7 @@ def evaluate():
         attentions = torch.stack(attentions)  # shape=(n_layers, batch_size, n_heads, seq_len, seq_len)
 
         for j in range(len(inputs)):
-            if has_att_labels[j]:
+            if prior != "none" and has_att_labels[j]:
                 annotated_seen.append(seen[j])
                 remove_all_grads()
                 ig_attributions = integrated_gradients(
@@ -199,14 +199,14 @@ def evaluate():
                         out_file.write(f"<p>Model attributions:</p>\n{attributions_html}\n")
                         out_file.write(f"<p>Attribution labels:</p>\n{weights_html}\n")
                         out_file.write(f"<p>predicted, actual: {outputs[j].tolist(), labels[j].tolist()}</p>\n")
-    print(f"Attribution loss using Integrated Gradients: {sum_ig_loss / len(test_loader) / batch_size}")
-    print(f"For seen and unseen, respectively: "
-          f"{sum_ig_loss_seen / annotated_seen.count(1)}, {sum_ig_loss_unseen / annotated_seen.count(0)}")
-    print(f"Attribution loss using BERT Attention: {sum_attention_loss / len(test_loader) / batch_size}")
-    print(f"For seen and unseen, respectively: "
-          f"{sum_attention_loss_seen / annotated_seen.count(1)}, {sum_attention_loss_unseen / annotated_seen.count(0)}")
+    if prior != "none":
+        print(f"Attribution loss using Integrated Gradients: {sum_ig_loss / len(test_loader) / batch_size}")
+        print(f"For seen and unseen, respectively: "
+              f"{sum_ig_loss_seen / annotated_seen.count(1)}, {sum_ig_loss_unseen / annotated_seen.count(0)}")
+        print(f"Attribution loss using BERT Attention: {sum_attention_loss / len(test_loader) / batch_size}")
+        print(f"For seen and unseen, respectively: "
+              f"{sum_attention_loss_seen / annotated_seen.count(1)}, {sum_attention_loss_unseen / annotated_seen.count(0)}")
     class_f1 = f1_score(all_labels, all_output_indices, labels=[0, 1, 2], average=None)
-
     with open(f"../output/{output_name}-predictions.txt", "a") as out_file:
         out_file.write(f"{all_output_indices}\n{all_labels}")
 
