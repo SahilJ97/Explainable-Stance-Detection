@@ -338,7 +338,7 @@ def train():
                         out_file.write(f"<p>Attribution labels:</p>\n{weights_html}\n")
                         out_file.write(f"<p>predicted, actual: {outputs[j].tolist(), labels[j].tolist()}</p>\n")
 
-            prior_loss = prior_loss / sum(has_att_labels)
+            prior_loss = prior_loss / len(inputs)
             running_correctness_loss += correctness_loss.item()
             running_prior_loss += prior_loss.item()
             loss = (prior_loss + correctness_loss) / grad_steps
