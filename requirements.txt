@@ -58,7 +58,7 @@ multidict==5.1.0
 murmurhash==1.0.2
 mypy-extensions==0.4.3
 nltk==3.5
-numpy==1.20.2
+numpy==1.17.0
 oauthlib==3.1.0
 omegaconf==2.0.2
 opt-einsum==3.3.0
@@ -110,7 +110,7 @@ spacy==2.3.2
 sparsemax==0.1.9
 SQLAlchemy==1.4.3
 srsly==1.0.2
-tensorboard==2.2.0
+tensorboard==2.3.0
 tensorboard-plugin-wit==1.7.0
 tensorboardX==2.1
 tensorflow==2.3.0

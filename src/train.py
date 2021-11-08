@@ -338,10 +338,10 @@ def train():
                         out_file.write(f"<p>Attribution labels:</p>\n{weights_html}\n")
                         out_file.write(f"<p>predicted, actual: {outputs[j].tolist(), labels[j].tolist()}</p>\n")
 
-            prior_loss = prior_loss / len(inputs)
+            prior_loss = prior_loss / float(len(inputs))
             running_correctness_loss += correctness_loss.item()
             running_prior_loss += prior_loss.item()
-            loss = (prior_loss + correctness_loss) / grad_steps
+            loss = (prior_loss + correctness_loss) / float(grad_steps)
             loss.backward(retain_graph=True)
             if (i + 1) % grad_steps == 0:
                 optimizer.step()
